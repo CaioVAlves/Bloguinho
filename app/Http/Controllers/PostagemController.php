@@ -30,10 +30,19 @@ class PostagemController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'titulo' => 'required',
+            'descricao' => 'required',
+            'conteudo' => 'required'
+        ]);
+        
         $postagem = new postagem;
+        $postagem->id = $request->id;
         $postagem ->titulo = $request->titulo;
         $postagem ->conteudo = $request->conteudo;
         $postagem -> save();
+
+        return redirect('')->with('status', 'criado com sucesso!');
     }
 
     /**
@@ -42,7 +51,7 @@ class PostagemController extends Controller
     public function show(string $id)
     {
         //dd($id);
-        $postagem = Postagem::find($id);
+        $postagem = Postagem::findOrFail($id);
         return view ('postagem.show', ['postagem' => $postagem]);
         //dd($postagem);
     }
@@ -52,7 +61,8 @@ class PostagemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $postagem = postagem::find($id);
+        return view('postagem.edit', ['postagem' => $postagem]);
     }
 
     /**
@@ -60,7 +70,19 @@ class PostagemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       
+        $validated = $request->validate([
+            'titulo' => 'required',
+            'descricao' => 'required',
+            'conteudo' => 'required'
+        ]);
+        
+        $postagem = postagem::find($id);
+        $postagem->titulo = $request->titulo;
+        $postagem->conteudo = $request->conteudo;
+        $postagem->save();
+
+        return redirect('')->with('status', 'editado com sucesso!');
     }
 
     /**
@@ -68,6 +90,9 @@ class PostagemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $postagem = postagem::find($id);
+        $postagem -> delete();
+
+        return redirect('')->with('status', 'excluido com sucesso!');
     }
 }
