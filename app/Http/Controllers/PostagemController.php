@@ -42,7 +42,7 @@ class PostagemController extends Controller
         $postagem ->conteudo = $request->conteudo;
         $postagem -> save();
 
-        return redirect('')->with('status', 'criado com sucesso!');
+        return redirect('/')->with('status', 'criado com sucesso!');
     }
 
     /**
@@ -82,7 +82,7 @@ class PostagemController extends Controller
         $postagem->conteudo = $request->conteudo;
         $postagem->save();
 
-        return redirect('')->with('status', 'editado com sucesso!');
+        return redirect('/')->with('status', 'editado com sucesso!');
     }
 
     /**
@@ -93,6 +93,6 @@ class PostagemController extends Controller
         $postagem = postagem::find($id);
         $postagem -> delete();
 
-        return redirect('')->with('status', 'excluido com sucesso!');
+        return redirect('/')->with('status', 'excluido com sucesso!');
     }
 }
